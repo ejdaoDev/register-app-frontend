@@ -1,0 +1,10 @@
+<div class="header-left-button">
+    <span>
+        <button mat-icon-button class="header-icon" [matMenuTriggerFor]="menu">
+            <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+            <a mat-menu-item (click)="onLogout()"><mat-icon>logout</mat-icon>Cerrar Sesión</a>
+        </mat-menu>
+    </span>
+</div>

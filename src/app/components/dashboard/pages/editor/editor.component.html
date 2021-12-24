@@ -1,0 +1,23 @@
+<div class="content" style="padding: 20px;">
+    <div class="container-header">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="container-title">editor</h1>
+            </div>
+        </div>
+    </div>
+    <!-- start content -->
+    <div>
+        Puedes revisar como configurar CKEditor en <a href="https://www.youtube.com/watch?v=DaeJPFSU3_c&t=656s&ab_channel=CodigoInteractivo" target="_blank">este video</a>.
+        Sigue <a href="https://nightly.ckeditor.com/21-10-22-06-04/basic/samples/toolbarconfigurator/index.html#basic" target="_blank">este link</a>
+        para mas configuraciones de la barra de herramientas<br>
+        <mat-divider></mat-divider><br>
+        <mat-label>Editor</mat-label><br><br>
+        <ckeditor [(ngModel)]="ckeditorContent"></ckeditor>
+    </div>
+
+    <br>
+    <mat-label>Content in <b>html</b></mat-label><br><br>
+    <textarea disabled class="form-control" rows="22"> {{ckeditorContent}}</textarea>
+    <!-- end content -->
+</div>
