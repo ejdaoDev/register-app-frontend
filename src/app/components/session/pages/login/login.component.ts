@@ -28,7 +28,10 @@ export class LoginComponent implements OnInit {
       if (response.status === 200) {
         localStorage.setItem('auth_token', response.data.token);
         localStorage.setItem('auth_user', JSON.stringify(response.data.user));
-        this.router.navigate(['dashboard/users']);
+        this.api.get('user').subscribe(response => {
+          localStorage.setItem('users',JSON.stringify(response.data.users));
+          this.router.navigate(['dashboard/users']);
+        })
       } else {
         this.alert = true;
         this.message = "Credenciales Invalidas";

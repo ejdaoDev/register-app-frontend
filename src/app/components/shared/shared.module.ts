@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedRoutingModule } from './shared-routing.module';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CKEditorModule } from 'ng2-ckeditor';
 import { FooterComponent } from './pages/footer/footer.component';
@@ -53,12 +53,12 @@ import { HighchartsChartModule } from 'highcharts-angular';
   exports: [
     CommonModule,
     FormsModule,
-    NgbModule,
     CKEditorModule,
     HeaderComponent,
     FooterComponent,
     FlexLayoutModule,
     HighchartsChartModule,
+    ReactiveFormsModule,
     //Angular Material exports
     MatAutocompleteModule,
     MatCheckboxModule,
@@ -102,6 +102,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
     SharedRoutingModule,
     CommonModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
     //Angular Material imports
     MatAutocompleteModule,
     MatCheckboxModule,

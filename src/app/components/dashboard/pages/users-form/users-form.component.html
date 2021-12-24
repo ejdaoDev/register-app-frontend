@@ -1,0 +1,88 @@
+<!-- start content -->
+<div class="content modal-create-user">
+  <div class="container-header">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+        <h1>{{title}}</h1>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-mb-12 col-md-12 col-lg-12"><br>
+      <!-- start Form -->
+      <form [formGroup]="RegisterUserForm" enctype="multipart/form-data"
+        (ngSubmit)="onRegisterUser(RegisterUserForm.value)">
+        <div style="text-align: center;" *ngIf="error || exit">
+          <span class="help-block">
+            <strong *ngIf="error" style="color: red;">{{ msg }}</strong>
+            <strong *ngIf="exit">{{ msg }}</strong>
+          </span>
+        </div>
+        <!-- Row -->
+        <div class="form-group row">
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Tipo*</label>
+            <select type="text" formControlName="idtypeId" class="form-control">
+              <option selected disabled hidden style="display: none" value=""></option>
+              <option value="1">C.C.</option>
+              <option value="2">T.I.</option>
+            </select>
+
+          </div>
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Identificación*</label>
+            <input type="text" class="form-control" formControlName="idnumber" maxlength="20" autocomplete="off" />
+
+          </div>
+          <!-- End Input -->
+        </div>
+        <!-- Row -->
+        <div class="form-group row">
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Primer Nombre*</label>
+            <input type="text" class="form-control" formControlName="firstname" maxlength="20" />
+          </div>
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Segundo Nombre</label>
+            <input type="text" class="form-control" formControlName="secondname" maxlength="20" />
+          </div>
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Primer Apellido*</label>
+            <input type="text" class="form-control" formControlName="firstlastname" maxlength="20" />
+          </div>
+          <!-- End Input -->
+          <!-- Input -->
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>Segundo Apellido</label>
+            <input type="text" class="form-control" formControlName="secondlastname" maxlength="20" />
+          </div>
+          <!-- End Input -->
+        </div>
+        <!-- Row -->
+        <div class="form-group row">
+          <!-- Input -->
+          <!-- Input -->
+          <!-- End Input -->
+          <!-- Button -->
+          <div class="col-sm-3 mb-3 mb-sm-3">
+            <button mat-raised-button type="submit" color="primary">{{action}}</button> <!--[disabled]="!RegisterUserForm.valid"-->
+          </div>
+          <!-- Button -->
+          <div class="col-sm-3 mb-3 mb-sm-3">
+            <button class="reset-btn" mat-raised-button type="onReset()">Reiniciar</button>
+          </div>
+          <!-- Button -->
+          <!-- End Buttons -->
+        </div>
+        <!-- End Row -->
+      </form>
+      <!-- end Form -->
+    </div>
+  </div>
+  <!-- end content -->
+</div>

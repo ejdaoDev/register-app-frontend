@@ -25,8 +25,8 @@ export class AppComponent implements OnInit {
         this.webpage = false;
         this.session = false;
         let url = document.location.href;
-        //url = url.replace("http://" + window.location.host + "/#/dashboard/pages/", "");
-        url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/dashboard/", "");
+        url = url.replace("http://" + window.location.host + "/#/dashboard/", "");
+        //url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/dashboard/", "");
         url = url.replace(/-/g, " ");
         let words = url.split(" ");
         for (let i = 0; i < words.length; i++) {
@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
         this.session = true;
         this.webpage = false;
         let url = document.location.href;
-        //url = url.replace("http://" + window.location.host + "/#/session/", "");
-        url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/session/", "");
+        url = url.replace("http://" + window.location.host + "/#/session/", "");
+        //url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/session/", "");
         url = url.replace(/-/g, " ");
         let words = url.split(" ");
         for (let i = 0; i < words.length; i++) {

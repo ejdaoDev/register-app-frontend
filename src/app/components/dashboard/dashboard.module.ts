@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import { HomeComponent } from './pages/home/home.component';
@@ -8,10 +7,10 @@ import { CardComponent } from './pages/home/widgets/card/card.component';
 import { PieComponent } from './pages/home/widgets/pie/pie.component';
 
 import { UsersComponent } from './pages/users/users.component';
+import { UsersFormComponent } from './pages/users-form/users-form.component';
 import { EditorComponent } from './pages/editor/editor.component';
 import { IconsComponent } from './pages/icons/icons.component';
 import { ButtonsComponent } from './pages/buttons/buttons.component';
-
 
 import { SharedModule } from '../shared/shared.module';
 @NgModule({
@@ -21,14 +20,14 @@ import { SharedModule } from '../shared/shared.module';
     CardComponent,
     PieComponent,
     UsersComponent,
+    UsersFormComponent,
     EditorComponent,
     IconsComponent,
-    ButtonsComponent,
+    ButtonsComponent
   ],
   imports: [
     DashboardRoutingModule,
-    SharedModule,
-    CommonModule
+    SharedModule
   ]
 })
 export class DashboardModule { }
