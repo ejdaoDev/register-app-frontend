@@ -24,4 +24,5 @@ const appRoutes: Routes = [];
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

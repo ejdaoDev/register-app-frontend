@@ -39,7 +39,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { getSpanishPaginatorIntl } from 'src/app/lang/es/spanish-paginator-intl';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -139,6 +140,9 @@ import { HighchartsChartModule } from 'highcharts-angular';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
   ]
 })
 export class SharedModule { }

@@ -18,13 +18,11 @@ export class UsersComponent implements OnInit {
   searchKey: any;
   users: any;
 
-
   displayedColumns: string[] = ['Nombres', 'Apellidos', 'Email', 'País', 'Area', 'Acciones'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | any;
   @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   constructor(private dialog: MatDialog, private api: ApiService) { }
-
   ngOnInit() {
     this.getUsers();
   }
@@ -54,13 +52,10 @@ export class UsersComponent implements OnInit {
     } else if (type === "edit") {
       user = JSON.parse(localStorage.getItem('users')!).filter((user: { id: number; }) => user.id === id)[0];
     }
-    console.log("valor pasado: ",type);
     const dialogRef = this.dialog.open(UsersFormComponent, { width: '600px', height: '470px', data: { type: type, user: user } });
     dialogRef.afterClosed().subscribe(() => {
-
+      this.getUsers();
     })
-
-
   }
 
   getUsers() {
@@ -80,7 +75,4 @@ export class UsersComponent implements OnInit {
   applyFilter() {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
-
 }
-
-
