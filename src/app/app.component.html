@@ -17,7 +17,7 @@
                 <mat-accordion>
                     <!--start links-->
                     <h2 matSubheader class="sub-header">Links</h2>
-                    <a class="only-link" mat-list-item routerLink="/dashboard/users"
+                    <a class="only-link" *ngIf="admin" mat-list-item routerLink="/dashboard/users"
                         (click)=" mobileQuery.matches? snav.toggle() : '' ">
                         <mat-icon>person</mat-icon> Usuarios
                     </a>

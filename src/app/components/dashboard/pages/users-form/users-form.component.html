@@ -72,7 +72,7 @@
 
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Primer Nombre*</label>
-            <input type="text" formControlName="firstname" class="form-control upper"
+            <input type="text" formControlName="firstname" (change)="onGenerateEmail(UserForm.value)" class="form-control upper"
               [class.error]="UserForm.get('firstname')?.dirty && !UserForm.get('firstname')?.valid || UserForm.get('firstname')?.touched && !UserForm.get('firstname')?.valid"
               maxlength="20" />
             <p class="input-error"
@@ -94,7 +94,7 @@
 
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Primer Apellido*</label>
-            <input type="text" formControlName="firstlastname" class="form-control upper"
+            <input type="text" (change)="onGenerateEmail(UserForm.value)" formControlName="firstlastname" class="form-control upper"
               [class.error]="UserForm.get('firstlastname')?.dirty && !UserForm.get('firstlastname')?.valid || UserForm.get('firstlastname')?.touched && !UserForm.get('firstlastname')?.valid"
               maxlength="20" />
             <p class="input-error"
@@ -119,7 +119,7 @@
 
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>País*</label>
-            <select type="text" formControlName="country" class="form-control"
+            <select type="text" (change)="onGenerateEmail(UserForm.value)" formControlName="country" class="form-control"
               [class.select-error]="UserForm.get('country')?.dirty && !UserForm.get('country')?.valid || UserForm.get('country')?.touched && !UserForm.get('country')?.valid">
               <option selected disabled hidden style="display: none" value=""></option>
               <option *ngFor="let country of countries" [value]="country.abbrev">{{country.name}}</option>
@@ -128,6 +128,10 @@
               *ngIf="UserForm.get('country')?.dirty && UserForm.get('country')?.hasError('required') || UserForm.get('country')?.touched && UserForm.get('country')?.hasError('required')">
               {{requiredError}}</p>
           </div>
+
+          <div class="col-sm-6 mb-3 mb-sm-0">
+            <label>email</label>
+            <input type="text" formControlName="email" class="form-control" /></div>
 
           <div *ngIf="create" class="col-sm-6 mb-3 mb-sm-0">
             <label>Fecha Ingreso</label>
@@ -179,6 +183,9 @@
         </div>
         <div class="col-12">
           <label><b>País :</b> {{data.user.country.name}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Email :</b> {{data.user.email}}</label>
         </div>
         <div class="col-12">
           <label><b>Fecha Registro :</b> {{createdAt}}</label>

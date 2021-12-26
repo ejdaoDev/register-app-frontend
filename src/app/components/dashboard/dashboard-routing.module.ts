@@ -6,16 +6,17 @@ import { UsersComponent } from './pages/users/users.component';
 import { EditorComponent } from './pages/editor/editor.component';
 import { HomeComponent } from './pages/home/home.component';
 import { IconsComponent } from './pages/icons/icons.component';
+import { AdminGuard } from 'src/app/guards/admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     children: [
-      { path: 'home', component: HomeComponent, data: { title: 'Dashboard | home' } , canActivate: [AuthGuard]},
-      { path: 'icons', component: IconsComponent, data: { title: 'Dashboard | Icons' }, canActivate: [AuthGuard] },
-      { path: 'buttons', component: ButtonsComponent, data: { title: 'Dashboard | Buttons' }, canActivate: [AuthGuard] },
-      { path: 'editor', component: EditorComponent, data: { title: 'Dashboard | Editor' }, canActivate: [AuthGuard] },
-      { path: 'users', component: UsersComponent, data: { title: 'Dashboard | Users' }, canActivate: [AuthGuard] },
+      { path: 'home', component: HomeComponent,  canActivate: [AuthGuard]},
+      { path: 'icons', component: IconsComponent, canActivate: [AuthGuard] },
+      { path: 'buttons', component: ButtonsComponent, canActivate: [AuthGuard] },
+      { path: 'editor', component: EditorComponent, canActivate: [AuthGuard] },
+      { path: 'users', component: UsersComponent, canActivate: [AuthGuard, AdminGuard] },
       { path: '**', redirectTo: 'dashboard/home' },
     ]
   }

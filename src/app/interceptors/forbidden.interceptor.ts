@@ -13,7 +13,7 @@ export class ForbiddenInterceptor implements HttpInterceptor {
       catchError((err) => {
         console.log(err);
         if ([403].indexOf(err.status) !== -1) {
-          this.router.navigate(['dashboard/users']);
+          this.router.navigate(['dashboard/home']);
         }
         return throwError(err);
       })

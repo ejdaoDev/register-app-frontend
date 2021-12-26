@@ -20,6 +20,7 @@ export class UsersFormComponent implements OnInit {
     role: new FormControl('', [Validators.required]),
     area: new FormControl('', [Validators.required]),
     country: new FormControl('', Validators.required),
+    email: new FormControl(''),
     firstname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
     secondname: new FormControl('', [Validators.pattern(/^[a-zA-Z ]+$/)]),
     firstlastname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
@@ -34,7 +35,7 @@ export class UsersFormComponent implements OnInit {
   create: boolean = false;
   edit: boolean = false;
   info: boolean = false;
-  createdAt:string = "";
+  createdAt: string = "";
   requiredError: string = "EL campo es requerido";
   patternError: string = "Algunos caracteres son invalidos";
 
@@ -66,6 +67,7 @@ export class UsersFormComponent implements OnInit {
   ]
 
   ngOnInit() {
+    this.UserForm.controls['email'].disable();
     if (this.data.type === 'create') {
       this.title = "Crear Usuario";
       this.action = "Crear";
@@ -76,16 +78,51 @@ export class UsersFormComponent implements OnInit {
       this.action = "Actualizar";
       this.edit = true;
       this.setFormValues();
-    } 
+    }
     else if (this.data.type === 'info') {
-      this.title = "Información del Usuario "; 
+      this.title = "Información del Usuario ";
       this.info = true;
       this.setFormValues();
       moment.locale('es');
       this.createdAt = moment(this.data.user.createdAt).format('MMMM DD YYYY');
-      this.disableFormControls();
     }
+  }
 
+  onGenerateEmail(form: any) {
+    if (this.create) {
+      if (form.firstname === "" || form.firstlastname === "" || form.country === "") {
+        const firstnameWitoutSpaces = form.firstname.replace(/\s+/g, '').toLowerCase().trim();
+        const firstlastnameWitoutSpaces = form.firstlastname.replace(/\s+/g, '').toLowerCase().trim();
+        let email = firstnameWitoutSpaces + firstlastnameWitoutSpaces + "@cidenet.com." + form.country;
+        this.UserForm.controls['email'].setValue(email);
+      } else {
+        this.UserForm.controls['email'].setValue("generando...");
+        this.getEmail(form);
+      }
+    }
+    if (this.edit) {
+      if (form.firstname.trim() !== this.data.user.firstname || form.firstlastname.trim() !== this.data.user.firstlastname) {
+        this.UserForm.controls['email'].setValue("generando...");
+        this.getEmail(form);
+      } else if (form.country !== this.data.user.country.abbrev) {
+        this.UserForm.controls['email'].setValue(this.data.user.email.replace('cidenet.com.' + this.data.user.country.abbrev, 'cidenet.com.' + form.country));
+      } else {
+        this.UserForm.controls['email'].setValue(this.data.user.email);
+      }
+    }
+  }
+
+  getEmail(form: any) {
+    let smallForm = {
+      firstname: form.firstname,
+      firstlastname: form.firstlastname,
+      country: form.country
+    }
+    setTimeout(() => {
+      this.api.post(smallForm, 'user/getNewEmail').subscribe(response => {
+        this.UserForm.controls['email'].setValue(response.data.email);
+      })
+    }, 500);
   }
 
   setFormValues() {
@@ -94,24 +131,12 @@ export class UsersFormComponent implements OnInit {
     this.UserForm.controls['area'].setValue(this.data.user.area.name);
     this.UserForm.controls['role'].setValue(this.data.user.role.name);
     this.UserForm.controls['country'].setValue(this.data.user.country.abbrev);
+    this.UserForm.controls['email'].setValue(this.data.user.email);
     this.UserForm.controls['firstname'].setValue(this.data.user.firstname);
     this.UserForm.controls['firstlastname'].setValue(this.data.user.firstlastname);
     this.UserForm.controls['secondname'].setValue(this.data.user.secondname);
     this.UserForm.controls['secondlastname'].setValue(this.data.user.secondlastname);
     this.UserForm.controls['createdAt'].setValue(moment());
-  }
-
-  disableFormControls() {
-    this.UserForm.controls['idtype'].disable();
-    this.UserForm.controls['idnumber'].disable();
-    this.UserForm.controls['area'].disable();
-    this.UserForm.controls['role'].disable();
-    this.UserForm.controls['country'].disable();
-    this.UserForm.controls['firstname'].disable();
-    this.UserForm.controls['firstlastname'].disable();
-    this.UserForm.controls['secondname'].disable();
-    this.UserForm.controls['secondlastname'].disable();
-    this.UserForm.controls['createdAt'].disable();
   }
 
   onReset() {
