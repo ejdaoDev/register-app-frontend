@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApiService } from 'src/app/services/api.service';
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-users-form',
   templateUrl: './users-form.component.html',
@@ -27,15 +28,20 @@ export class UsersFormComponent implements OnInit {
     secondlastname: new FormControl('', [Validators.pattern(/^[a-zA-Z ]+$/)]),
     createdAt: new FormControl('', [Validators.required]),
   });
+
   error: boolean = false;
   exit: boolean = false;
+
   msg = "";
   title: string = "";
   action: string = "";
+
   create: boolean = false;
   edit: boolean = false;
   info: boolean = false;
+
   createdAt: string = "";
+
   requiredError: string = "EL campo es requerido";
   patternError: string = "Algunos caracteres son invalidos";
 
@@ -66,6 +72,9 @@ export class UsersFormComponent implements OnInit {
     { value: "PEP", name: "PEP" }
   ]
 
+  /**
+   * Ejecutar al cargar el componente
+   */
   ngOnInit() {
     this.UserForm.controls['email'].disable();
     if (this.data.type === 'create') {
@@ -88,6 +97,11 @@ export class UsersFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Previsualización de como será el correo generado automaticamente en base al primer nombre,
+   * primer apellido y país del usuario.
+   * @param form 
+   */
   onGenerateEmail(form: any) {
     if (this.create) {
       if (form.firstname === "" || form.firstlastname === "" || form.country === "") {
@@ -125,6 +139,10 @@ export class UsersFormComponent implements OnInit {
     }, 500);
   }
 
+  /**
+   * En caso que se esté realizando una edición de usuario, esta función asignará
+   * los valores actuales del usuario a los campos editables,
+   */
   setFormValues() {
     this.UserForm.controls['idtype'].setValue(this.data.user.idtype.abbrev);
     this.UserForm.controls['idnumber'].setValue(this.data.user.idnumber);
@@ -139,12 +157,10 @@ export class UsersFormComponent implements OnInit {
     this.UserForm.controls['createdAt'].setValue(moment());
   }
 
-  onReset() {
-    this.UserForm.reset();
-    this.error = false;
-    this.exit = false;
-  }
-
+  /**
+   * Ejecutar al hacer submit en el formulario
+   * @param form 
+   */
   onSubmit(form: any) {
     form.firstname = form.firstname.toUpperCase().trim()
     form.secondname = form.secondname.toUpperCase().trim()
@@ -189,6 +205,12 @@ export class UsersFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Limpiar el formulario
+   */
+  onReset() {
+    this.UserForm.reset();
+    this.error = false;
+    this.exit = false;
+  }
 }
-
-

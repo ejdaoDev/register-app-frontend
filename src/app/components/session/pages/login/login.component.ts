@@ -1,5 +1,5 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
   alert: boolean = false;
   message: string = "";
@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
-
-  onSubmit() {
-    this.api.post(this.loginForm.value, 'auth/login').subscribe(response => {
+  /**
+   * Ejecutar al hacer submit en el formulario
+   */
+  onSubmit(form:any) {
+    this.api.post(form, 'auth/login').subscribe(response => {
       if (response.status === 200) {
         localStorage.setItem('auth_token', response.data.token);
         localStorage.setItem('auth_user', JSON.stringify(response.data.user));

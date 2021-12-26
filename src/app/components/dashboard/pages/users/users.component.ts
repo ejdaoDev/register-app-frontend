@@ -23,10 +23,17 @@ export class UsersComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
   constructor(private dialog: MatDialog, private api: ApiService) { }
+  /**
+   * Ejecutar al cargar el componente
+   */
   ngOnInit() {
     this.getUsers();
   }
 
+  /**
+   * Elimina el usuario seleccionado
+   * @param id
+   */
   onDelete(id: number) {
     Swal.fire({
       title: 'Seguro deseas eliminar este usuario?',
@@ -45,11 +52,16 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  /**
+   * Abre el dialog UsersFormComponent, y muestra diferentes valores basado en el valor "type"
+   * @param type 
+   * @param id 
+   */
   onUserForm(type: string, id: any = null) {
     let user;
     if (type === "create") {
       user = null;
-    } else if (type === "edit" || type === "info" ) {
+    } else if (type === "edit" || type === "info") {
       user = JSON.parse(localStorage.getItem('users')!).filter((user: { id: number; }) => user.id === id)[0];
     }
     const dialogRef = this.dialog.open(UsersFormComponent, { width: '600px', height: '470px', data: { type: type, user: user } });
@@ -61,6 +73,9 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  /**
+   * Obtener los usuarios creados por el usuario autenticado
+   */
   getUsers() {
     this.api.get('user').subscribe(response => {
       localStorage.setItem('users', JSON.stringify(response.data.users));
@@ -70,12 +85,19 @@ export class UsersComponent implements OnInit {
     })
   }
 
+  /**
+   * Limpia el input "searchKey" 
+   */
   onSearchClear() {
     this.searchKey = "";
     this.applyFilter();
   }
 
+  /**
+   * Filtra los valores de la tabla basado en los valores del input "searchKey"
+   */
   applyFilter() {
     this.dataSource.filter = this.searchKey.trim().toLowerCase();
   }
+
 }

@@ -11,7 +11,7 @@
                     <label *ngIf="alert" style="font-weight: bold;">{{message}}</label>
                 </div>
                 <!-- loginForm -->
-                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
                     <div class="mb-3 position-relative">
                         <input type="text" class="form-control" formControlName="email" placeholder="Email" maxlength="100">
                         <mat-icon class=" btn-serch position-absolute">email</mat-icon>

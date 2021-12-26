@@ -8,8 +8,7 @@ $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 @include angular-material-color($dark-theme);
 
 mat-sidenav {
-  //background-image: url('https://i.gyazo.com/5cd99bef0690e691cff6550ba46ffaac.png');
-  background-image: url("/assets/dashboard/img/dark.jpg");
+  background-image: url('https://i.gyazo.com/5cd99bef0690e691cff6550ba46ffaac.png');
   background-size: cover;
 }
 mat-sidenav-content {
