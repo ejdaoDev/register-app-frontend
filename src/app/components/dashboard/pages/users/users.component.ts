@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
   searchKey: any;
   users: any;
 
-  displayedColumns: string[] = ['Nombres', 'Apellidos', 'Email', 'País', 'Area', 'Acciones'];
+  displayedColumns: string[] = ['firstname', 'firstlastname', 'email', 'country', 'area', 'actions'];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator | any;
   @ViewChild(MatSort, { static: true }) sort: MatSort | any;
 
@@ -49,12 +49,15 @@ export class UsersComponent implements OnInit {
     let user;
     if (type === "create") {
       user = null;
-    } else if (type === "edit") {
+    } else if (type === "edit" || type === "info" ) {
       user = JSON.parse(localStorage.getItem('users')!).filter((user: { id: number; }) => user.id === id)[0];
     }
     const dialogRef = this.dialog.open(UsersFormComponent, { width: '600px', height: '470px', data: { type: type, user: user } });
     dialogRef.afterClosed().subscribe(() => {
-      this.getUsers();
+      if (localStorage.getItem('needUpdateUsers') !== null) {
+        this.getUsers();
+        localStorage.removeItem('needUpdateUsers');
+      }
     })
   }
 

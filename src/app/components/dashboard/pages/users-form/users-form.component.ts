@@ -20,10 +20,10 @@ export class UsersFormComponent implements OnInit {
     role: new FormControl('', [Validators.required]),
     area: new FormControl('', [Validators.required]),
     country: new FormControl('', Validators.required),
-    firstname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZñáéíóúÑÁÉÍÓÚ0-9 ]+$/)]),
-    secondname: new FormControl('', [Validators.pattern(/^[a-zA-ZñáéíóúÑÁÉÍÓÚ0-9 ]+$/)]),
-    firstlastname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-ZñáéíóúÑÁÉÍÓÚ0-9 ]+$/)]),
-    secondlastname: new FormControl('', [Validators.pattern(/^[a-zA-ZñáéíóúÑÁÉÍÓÚ0-9 ]+$/)]),
+    firstname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z]+$/)]),
+    secondname: new FormControl('', [Validators.pattern(/^[a-zA-Z ]+$/)]),
+    firstlastname: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z ]+$/)]),
+    secondlastname: new FormControl('', [Validators.pattern(/^[a-zA-Z ]+$/)]),
     createdAt: new FormControl('', [Validators.required]),
   });
   error: boolean = false;
@@ -31,8 +31,12 @@ export class UsersFormComponent implements OnInit {
   msg = "";
   title: string = "";
   action: string = "";
-  create:boolean = false;
-  edit:boolean = false;
+  create: boolean = false;
+  edit: boolean = false;
+  info: boolean = false;
+  createdAt:string = "";
+  requiredError: string = "EL campo es requerido";
+  patternError: string = "Algunos caracteres son invalidos";
 
   areas: any = [
     { value: "ADMINISTRACION", name: "ADMINISTRACION" },
@@ -71,17 +75,43 @@ export class UsersFormComponent implements OnInit {
       this.title = "Editar Usuario";
       this.action = "Actualizar";
       this.edit = true;
-      this.UserForm.controls['idtype'].setValue(this.data.user.idtype.abbrev);
-      this.UserForm.controls['idnumber'].setValue(this.data.user.idnumber);
-      this.UserForm.controls['area'].setValue(this.data.user.area.name);
-      this.UserForm.controls['role'].setValue(this.data.user.role.name);
-      this.UserForm.controls['country'].setValue(this.data.user.country.abbrev);
-      this.UserForm.controls['firstname'].setValue(this.data.user.firstname);
-      this.UserForm.controls['firstlastname'].setValue(this.data.user.firstlastname);
-      this.UserForm.controls['secondname'].setValue(this.data.user.secondname);
-      this.UserForm.controls['secondlastname'].setValue(this.data.user.secondlastname);
-      this.UserForm.controls['createdAt'].setValue(moment());
+      this.setFormValues();
+    } 
+    else if (this.data.type === 'info') {
+      this.title = "Información del Usuario "; 
+      this.info = true;
+      this.setFormValues();
+      moment.locale('es');
+      this.createdAt = moment(this.data.user.createdAt).format('MMMM DD YYYY');
+      this.disableFormControls();
     }
+
+  }
+
+  setFormValues() {
+    this.UserForm.controls['idtype'].setValue(this.data.user.idtype.abbrev);
+    this.UserForm.controls['idnumber'].setValue(this.data.user.idnumber);
+    this.UserForm.controls['area'].setValue(this.data.user.area.name);
+    this.UserForm.controls['role'].setValue(this.data.user.role.name);
+    this.UserForm.controls['country'].setValue(this.data.user.country.abbrev);
+    this.UserForm.controls['firstname'].setValue(this.data.user.firstname);
+    this.UserForm.controls['firstlastname'].setValue(this.data.user.firstlastname);
+    this.UserForm.controls['secondname'].setValue(this.data.user.secondname);
+    this.UserForm.controls['secondlastname'].setValue(this.data.user.secondlastname);
+    this.UserForm.controls['createdAt'].setValue(moment());
+  }
+
+  disableFormControls() {
+    this.UserForm.controls['idtype'].disable();
+    this.UserForm.controls['idnumber'].disable();
+    this.UserForm.controls['area'].disable();
+    this.UserForm.controls['role'].disable();
+    this.UserForm.controls['country'].disable();
+    this.UserForm.controls['firstname'].disable();
+    this.UserForm.controls['firstlastname'].disable();
+    this.UserForm.controls['secondname'].disable();
+    this.UserForm.controls['secondlastname'].disable();
+    this.UserForm.controls['createdAt'].disable();
   }
 
   onReset() {
@@ -91,6 +121,10 @@ export class UsersFormComponent implements OnInit {
   }
 
   onSubmit(form: any) {
+    form.firstname = form.firstname.toUpperCase().trim()
+    form.secondname = form.secondname.toUpperCase().trim()
+    form.firstlastname = form.firstlastname.toUpperCase().trim()
+    form.secondlastname = form.secondlastname.toUpperCase().trim()
     if (this.create) {
       if (moment(form.createdAt).format() < moment().subtract(30, "d").format('YYYY-MM-DD') ||
         moment(form.createdAt).format() > moment().format('YYYY-MM-DD')) {
@@ -102,6 +136,7 @@ export class UsersFormComponent implements OnInit {
             this.exit = true;
             this.error = false;
             this.msg = "El usuario fue registrado correctamente";
+            localStorage.setItem('needUpdateUsers', 'true');
             this.UserForm.reset();
             setTimeout(() => { this.exit = false; this.error = false; }, 1000);
           } else {
@@ -111,21 +146,21 @@ export class UsersFormComponent implements OnInit {
         })
       }
     }
-    if(this.edit){
-      this.api.put(form,'user/'+this.data.user.id).subscribe(response => {
-        if(response.status === 200){
+    if (this.edit) {
+      this.api.put(form, 'user/' + this.data.user.id).subscribe(response => {
+        if (response.status === 200) {
           this.exit = true;
-            this.error = false;
-            this.msg = "El usuario fue actualizado correctamente";
-            this.UserForm.reset();
-            setTimeout(() => { this.dialogRef.close() }, 1000);
-        } if(response.status === 204){
+          this.error = false;
+          this.msg = "El usuario fue actualizado correctamente";
+          localStorage.setItem('needUpdateUsers', 'true');
+          this.UserForm.reset();
+          setTimeout(() => { this.dialogRef.close() }, 1000);
+        } if (response.status === 204) {
           this.error = true;
           this.msg = "El email y/o identificación ya existe";
         }
 
       })
-
     }
   }
 

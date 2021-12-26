@@ -12,46 +12,22 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class AppComponent implements OnInit {
   @HostBinding('class') ComponentCssClass: any;
   dashboard: boolean = false;
-  webpage: boolean = false;
   session: boolean = false;
-  getTitle: any = null;
   mobileQuery: MediaQueryList;
 
   constructor(private router: Router, private overlayContainer: OverlayContainer, private titleService: Title, private activePage: ActivatedRoute, media: MediaMatcher) {
-    //more info about Title here: https://www.youtube.com/watch?v=8iWAChl3rCQ&t=1128s&ab_channel=TheCodeCaptain
     this.router.events.subscribe(event => {
       if (document.location.href?.includes("dashboard")) {
         this.dashboard = true;
-        this.webpage = false;
         this.session = false;
-        let url = document.location.href;
-        url = url.replace("http://" + window.location.host + "/#/dashboard/", "");
-        //url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/dashboard/", "");
-        url = url.replace(/-/g, " ");
-        let words = url.split(" ");
-        for (let i = 0; i < words.length; i++) {
-          let j = words[i].charAt(0).toUpperCase();
-          words[i] = j + words[i].substr(1).toLowerCase();
-        }
-        this.setTitle('Dashboard | ' + words.join(" "));
+        this.setTitle('Dashboard');
       } else if (document.location.href?.includes("session")) {
         this.dashboard = false;
         this.session = true;
-        this.webpage = false;
-        let url = document.location.href;
-        url = url.replace("http://" + window.location.host + "/#/session/", "");
-        //url = url.replace("https://ejdaodev.github.io/dashboard-angular-material/#/session/", "");
-        url = url.replace(/-/g, " ");
-        let words = url.split(" ");
-        for (let i = 0; i < words.length; i++) {
-          let j = words[i].charAt(0).toUpperCase();
-          words[i] = j + words[i].substr(1).toLowerCase();
-        }
-        this.setTitle(words.join(" "));
+        if (document.location.href?.includes("login")) this.setTitle('Ingresar');
       } else {
         this.dashboard = false;
         this.session = false;
-        this.webpage = true;
         switch (true) {
           case event instanceof NavigationEnd:
             this.titleService.setTitle(this.activePage.firstChild?.snapshot.data.title);
@@ -61,10 +37,7 @@ export class AppComponent implements OnInit {
         }
       }
     })
-
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
-
-
   }
 
   public setTitle(newTitle: any) {
@@ -75,7 +48,6 @@ export class AppComponent implements OnInit {
     { name: 'Iconos', route: '/dashboard/icons' },
     { name: 'Botones', route: '/dashboard/buttons' }
   ]
-
 
   ngOnInit() {
     if (localStorage.getItem('style') != null) {
@@ -105,7 +77,6 @@ export class AppComponent implements OnInit {
   }
 
   onActivate(event: any) {
-    //https://www.youtube.com/watch?v=MwnISpn0GOc&ab_channel=MediaDiary
     window.scroll(0, 0);
   }
 }

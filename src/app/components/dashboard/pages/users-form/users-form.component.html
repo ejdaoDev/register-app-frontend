@@ -9,9 +9,7 @@
   </div>
   <div class="row">
     <div class="col-sm-12 col-mb-12 col-md-12 col-lg-12"><br>
-      <!-- start Form -->
-      <form [formGroup]="UserForm" (ngSubmit)="onSubmit(UserForm.value)">
-        
+      <form *ngIf="!info" [formGroup]="UserForm" (ngSubmit)="onSubmit(UserForm.value)">
         <!-- Information -->
         <div style="text-align: center;" *ngIf="error || exit">
           <span class="help-block">
@@ -19,95 +17,173 @@
             <strong *ngIf="exit">{{ msg }}</strong>
           </span>
         </div>
-        <!-- End Information -->
-
         <!-- Row -->
         <div class="form-group row">
-          <!-- Select -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Tipo*</label>
-            <select type="text" formControlName="idtype" class="form-control">
+            <select type="text" formControlName="idtype" class="form-control"
+              [class.select-error]="UserForm.get('idtype')?.dirty && !UserForm.get('idtype')?.valid || UserForm.get('idtype')?.touched && !UserForm.get('idtype')?.valid">
               <option selected disabled hidden style="display: none" value=""></option>
               <option *ngFor="let idtype of idtypes" [value]="idtype.value">{{idtype.name}}</option>
             </select>
+            <p class="input-error"
+              *ngIf="UserForm.get('idtype')?.dirty && UserForm.get('idtype')?.hasError('required') || UserForm.get('idtype')?.touched && UserForm.get('idtype')?.hasError('required')">
+              {{requiredError}}</p>
           </div>
-          <!-- Input -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Identificación*</label>
-            <input type="text" class="form-control" formControlName="idnumber" maxlength="20" autocomplete="off" />
+            <input type="text" formControlName="idnumber" class="form-control"
+              [class.error]="UserForm.get('idnumber')?.dirty && !UserForm.get('idnumber')?.valid || UserForm.get('idnumber')?.touched && !UserForm.get('idnumber')?.valid"
+              maxlength="20" autocomplete="off" />
+            <p class="input-error"
+              *ngIf="UserForm.get('idnumber')?.dirty && UserForm.get('idnumber')?.hasError('required') || UserForm.get('idnumber')?.touched && UserForm.get('idnumber')?.hasError('required')">
+              {{requiredError}}</p>
+            <p class="input-error" *ngIf="UserForm.get('idnumber')?.hasError('pattern')">{{patternError}}</p>
           </div>
-          <!-- Select -->    
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Rol*</label>
-            <select type="text" formControlName="role" class="form-control">
+            <select type="text" formControlName="role" class="form-control"
+              [class.select-error]="UserForm.get('role')?.dirty && !UserForm.get('role')?.valid || UserForm.get('role')?.touched && !UserForm.get('role')?.valid">
               <option selected disabled hidden style="display: none" value=""></option>
               <option *ngFor="let role of roles" [value]="role.value">{{role.name}}</option>
             </select>
+            <p class="input-error"
+              *ngIf="UserForm.get('role')?.dirty && UserForm.get('role')?.hasError('required') || UserForm.get('role')?.touched && UserForm.get('role')?.hasError('required')">
+              {{requiredError}}</p>
           </div>
-          <!-- Select -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Area*</label>
-            <select type="text" formControlName="area" class="form-control">
+            <select type="text" formControlName="area" class="form-control"
+              [class.select-error]="UserForm.get('area')?.dirty && !UserForm.get('area')?.valid || UserForm.get('area')?.touched && !UserForm.get('area')?.valid">
               <option selected disabled hidden style="display: none" value=""></option>
               <option *ngFor="let area of areas" [value]="area.value">{{area.name}}</option>
             </select>
+            <p class="input-error"
+              *ngIf="UserForm.get('area')?.dirty && UserForm.get('area')?.hasError('required') || UserForm.get('area')?.touched && UserForm.get('area')?.hasError('required')">
+              {{requiredError}}</p>
           </div>
         </div>
-        <!-- End Row -->
-
         <!-- Row -->
         <div class="form-group row">
-          <!-- Input -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Primer Nombre*</label>
-            <input type="text" class="form-control" formControlName="firstname" maxlength="20" />
+            <input type="text" formControlName="firstname" class="form-control upper"
+              [class.error]="UserForm.get('firstname')?.dirty && !UserForm.get('firstname')?.valid || UserForm.get('firstname')?.touched && !UserForm.get('firstname')?.valid"
+              maxlength="20" />
+            <p class="input-error"
+              *ngIf="UserForm.get('firstname')?.dirty && UserForm.get('firstname')?.hasError('required') || UserForm.get('firstname')?.touched && UserForm.get('firstname')?.hasError('required')">
+              {{requiredError}}</p>
+            <p class="input-error" *ngIf="UserForm.get('firstname')?.hasError('pattern')">{{patternError}}</p>
           </div>
-          <!-- Input -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Segundo Nombre</label>
-            <input type="text" class="form-control" formControlName="secondname" maxlength="20" />
+            <input type="text" formControlName="secondname" class="form-control upper"
+              [class.error]="UserForm.get('secondname')?.dirty && !UserForm.get('secondname')?.valid || UserForm.get('secondname')?.touched && !UserForm.get('secondname')?.valid"
+              maxlength="20" />
+            <p class="input-error"
+              *ngIf="UserForm.get('secondname')?.dirty && UserForm.get('secondname')?.hasError('required') || UserForm.get('secondname')?.touched && UserForm.get('secondname')?.hasError('required')">
+              {{requiredError}}</p>
+            <p class="input-error" *ngIf="UserForm.get('secondname')?.hasError('pattern')">{{patternError}}</p>
           </div>
-          <!-- Input -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Primer Apellido*</label>
-            <input type="text" class="form-control" formControlName="firstlastname" maxlength="20" />
+            <input type="text" formControlName="firstlastname" class="form-control upper"
+              [class.error]="UserForm.get('firstlastname')?.dirty && !UserForm.get('firstlastname')?.valid || UserForm.get('firstlastname')?.touched && !UserForm.get('firstlastname')?.valid"
+              maxlength="20" />
+            <p class="input-error"
+              *ngIf="UserForm.get('firstlastname')?.dirty && UserForm.get('firstlastname')?.hasError('required') || UserForm.get('firstlastname')?.touched && UserForm.get('firstlastname')?.hasError('required')">
+              {{requiredError}}</p>
+            <p class="input-error" *ngIf="UserForm.get('firstlastname')?.hasError('pattern')">{{patternError}}</p>
           </div>
-          <!-- Input -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>Segundo Apellido</label>
-            <input type="text" class="form-control" formControlName="secondlastname" maxlength="20" />
+            <input type="text" formControlName="secondlastname" class="form-control upper"
+              [class.error]="UserForm.get('secondlastname')?.dirty && !UserForm.get('secondlastname')?.valid || UserForm.get('secondlastname')?.touched && !UserForm.get('secondlastname')?.valid"
+              maxlength="20" />
+            <p class="input-error"
+              *ngIf="UserForm.get('secondlastname')?.dirty && UserForm.get('secondlastname')?.hasError('required') || UserForm.get('secondlastname')?.touched && UserForm.get('secondlastname')?.hasError('required')">
+              {{requiredError}}</p>
+            <p class="input-error" *ngIf="UserForm.get('secondlastname')?.hasError('pattern')">{{patternError}}</p>
           </div>
         </div>
-        <!-- End Row -->
-
         <!-- Row -->
         <div class="form-group row">
-          <!-- Select -->
+
           <div class="col-sm-6 mb-3 mb-sm-0">
             <label>País*</label>
-            <select type="text" formControlName="country" class="form-control">
+            <select type="text" formControlName="country" class="form-control"
+              [class.select-error]="UserForm.get('country')?.dirty && !UserForm.get('country')?.valid || UserForm.get('country')?.touched && !UserForm.get('country')?.valid">
               <option selected disabled hidden style="display: none" value=""></option>
               <option *ngFor="let country of countries" [value]="country.abbrev">{{country.name}}</option>
             </select>
+            <p class="input-error"
+              *ngIf="UserForm.get('country')?.dirty && UserForm.get('country')?.hasError('required') || UserForm.get('country')?.touched && UserForm.get('country')?.hasError('required')">
+              {{requiredError}}</p>
           </div>
-          <!-- Input -->
+
           <div *ngIf="create" class="col-sm-6 mb-3 mb-sm-0">
             <label>Fecha Ingreso</label>
-            <input type="date" class="form-control" formControlName="createdAt" />
+            <input type="date" formControlName="createdAt" class="form-control"
+              [class.select-error]="UserForm.get('createdAt')?.dirty && !UserForm.get('createdAt')?.valid || UserForm.get('createdAt')?.touched && !UserForm.get('createdAt')?.valid" />
+            <p class="input-error"
+              *ngIf="UserForm.get('createdAt')?.dirty && UserForm.get('createdAt')?.hasError('required') || UserForm.get('createdAt')?.touched && UserForm.get('createdAt')?.hasError('required')">
+              {{requiredError}}</p>
           </div>
-          <!-- Input -->
+
           <div class="col-sm-3 mb-3 mb-sm-6 div-form">
-            <button class="btn-form" mat-raised-button type="submit" [disabled]="!UserForm.valid" color="primary">{{action}}</button> <!--[disabled]="!RegisterUserForm.valid"-->
+            <button class="btn-form" mat-raised-button type="submit" [disabled]="!UserForm.valid" color="primary">{{action}}</button>
           </div>
-          <!-- Actions -->
+
           <div class="col-sm-3 mb-3 mb-sm-6 div-form">
             <button class="btn-form reset-btn" mat-raised-button type="button" (click)="onReset()">Reiniciar</button>
           </div>
-          <!-- End Actions -->
-        </div>
-        <!-- End Row -->
 
+        </div>
       </form>
+
+      <div *ngIf="info" class="form-group row">
+        <div class="col-12">
+          <label><b>Tipo :</b> {{data.user.idtype.name}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Identificación :</b> {{data.user.idnumber}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Rol :</b> {{data.user.role.name}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Area :</b> {{data.user.area.name}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Identificación :</b> {{data.user.idnumber}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Primer Nombre :</b> {{data.user.firstname}}</label>
+        </div>
+        <div *ngIf="data.user.secondname !== '' && data.user.secondname !== null" class="col-12">
+          <label><b>Segundo Nombre :</b> {{data.user.secondname}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Primer Apellido :</b> {{data.user.firstlastname}}</label>
+        </div>
+        <div *ngIf="data.user.secondlastname !== '' && data.user.secondlastname !== null" class="col-12">
+          <label><b>Segundo Apellido :</b> {{data.user.secondlastname}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>País :</b> {{data.user.country.name}}</label>
+        </div>
+        <div class="col-12">
+          <label><b>Fecha Registro :</b> {{createdAt}}</label>
+        </div>
+      </div>
       <!-- end Form -->
 
     </div>

@@ -9,6 +9,7 @@ table {
 .search-form-field {
   width: 15%;
   margin-left: 10px;
+  z-index: 1;
 }
 .search-form-field div.mat-form-field-underline {
   display: none;
@@ -23,3 +24,10 @@ table {
   height: 25px;
   width: 25px;
 }
+
+@media only screen and (max-width : 767px) {
+  .render-column{
+    display: none !important;
+  }
+}
+

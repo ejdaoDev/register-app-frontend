@@ -5,7 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './components/shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UnauthorizedInterceptor } from './interceptors/unauthorized.interceptor';
+import { ForbiddenInterceptor } from './interceptors/forbidden.interceptor';
 
 const appRoutes: Routes = [];
 
@@ -20,7 +22,9 @@ const appRoutes: Routes = [];
     HttpClientModule
   ],
   providers: [
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ForbiddenInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
