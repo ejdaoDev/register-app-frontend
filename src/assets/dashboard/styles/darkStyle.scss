@@ -1,40 +1,10 @@
-$dark-primary: mat-palette($mat-green, A200);
-$dark-accent: mat-palette($mat-purple, A700);
-$dark-warn: mat-palette($mat-red, A400);
-$dark-default: mat-palette($mat-red, A400);
-
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-
-@include angular-material-color($dark-theme);
-
 mat-sidenav {
   background-image: url('https://i.gyazo.com/5cd99bef0690e691cff6550ba46ffaac.png');
   background-size: cover;
 }
-mat-sidenav-content {
-  background: linear-gradient(120deg, rgb(26, 26, 26), #110006) !important;
-}
-
-footer {
-  text-align: center !important;
-  padding-left: 10px !important;
-  padding-right: 10px !important;
-  padding-top: 15px !important;
-  padding-bottom: 10px !important;
-  background: linear-gradient(120deg, black, #030001) !important;
-  color: white !important;
-}
-footer a {
-  color: rgb(172, 170, 170) !important;
-}
 
 mat-expansion-panel {
-  background: #1d0303 !important;
-  margin: 3px;
-  opacity: 0.7;
-}
-mat-expansion-panel:focus {
-  background: #cf1515 !important;
+  background: #dce3e6;
   margin: 3px;
   opacity: 0.7;
 }
@@ -44,77 +14,66 @@ mat-expansion-panel mat-panel-title {
 }
 
 mat-toolbar {
-  background: linear-gradient(120deg, black, #030001) !important;
+  box-shadow: 0px 0px 5px 3px rgb(173, 172, 172) !important;
+  background: #1976d2 !important;
 }
 
 app-footer {
-  background: linear-gradient(120deg, black, #030001) !important;
-  height: 50px;
+  height: 50px !important;
 }
 
 .mat-sidenav-content::-webkit-scrollbar {
   width: 10px;
   height: 10px;
+  background-color: #e5e8e7;
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: rgb(53, 53, 53);
-  outline: 1px solid #030001;
+.mat-sidenav-content::-webkit-scrollbar-thumb {
+  background: #1976d2;
 }
 
 footer {
-  text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 15px;
-  color: #aa00ff !important;
+  text-align: center !important;
+  color: #eff5fc !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  padding-top: 15px !important;
+  background: #1976d2 !important;
+  height: 50px !important;
 }
 
 .footer-link {
-  color: black;
+  color: rgb(236, 236, 236);
   text-decoration: none;
-}
-
-.header-icon {
-  color: #aa00ff !important;
-}
-
-.only-link {
-  opacity: 0.6;
-}
-
-.navbar-title {
-  opacity: 0.7;
-}
-
-.content {
-  opacity: 0.7;
 }
 
 //control about the links in the sidebar
 .only-link {
   font-weight: bold;
-  opacity: 0.7 !important;
+  background: rgb(216, 216, 216);
+  opacity: 0.7;
   width: 254px !important;
-  margin: 2px !important;
+  margin: 2px;
 }
 
 .only-link:hover {
   font-weight: bold;
-  opacity: 0.7 !important;
-  width: 254px !important;
-  margin: 2px !important;
+  background: rgb(204, 204, 204);
+  opacity: 0.7;
+  margin: 2px;
 }
 
 .only-link:focus {
   font-weight: bold;
-  opacity: 0.7 !important;
+  background: rgb(216, 216, 216);
+  opacity: 0.7;
   width: 254px !important;
   margin: 2px;
 }
 
 .sidebar-is-mobile .only-link {
   font-weight: bold;
+  background: rgb(216, 216, 216) !important;
   opacity: 0.7;
   width: 254px !important;
   margin: 2px;
@@ -122,20 +81,24 @@ footer {
 
 .sidebar-is-mobile .only-link:hover {
   font-weight: bold;
+  background: rgb(204, 204, 204) !important;
   opacity: 0.7;
   margin: 2px;
 }
 
 .sidebar-is-mobile .only-link:focus {
   font-weight: bold;
+  background: rgb(216, 216, 216) !important;
   opacity: 0.7;
   width: 254px !important;
   margin: 2px;
 }
 
-.sidebar-is-mobile .only-link:active {
-  font-weight: bold;
-  opacity: 0.7;
-  width: 254px !important;
-  margin: 2px;
+.sub-header {
+  color: #ffffff;
 }
+
+.header-icon {
+  color: #eff5fc !important;
+}
+

@@ -60,23 +60,32 @@ export class AppComponent implements OnInit {
     }
   }
 
-  public SetTheme(e: string) {
-    if (e != localStorage.getItem('style')) {
+  /**
+   * Funciones para cambio de apariencia
+   * @param e 
+   */
+  SetTheme(e: string) {
       localStorage.setItem('style', e)
-      window.location.reload();
-    }
-
+      this.onSetTheme(e);
   }
 
-  public onSetTheme(e: string) {
+  onSetTheme(e: string) {
     this.overlayContainer.getContainerElement().classList.add(e);
     this.ComponentCssClass = e;
   }
 
+  /**
+   * Al cargar el componente scroll automatico al top
+   * @param event 
+   */
   onActivate(event: any) {
     window.scroll(0, 0);
   }
 
+  /**
+   * El renderizado depende de la ruta
+   * @param event 
+   */
   onChangeRoute(event: any) {
     if (document.location.href?.includes("dashboard")) {
       this.dashboard = true;
@@ -99,6 +108,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**
+   * Asigna el titulo de la página
+   * @param newTitle 
+   */
   setTitle(newTitle: any) {
     this.titleService.setTitle(newTitle);
   }
