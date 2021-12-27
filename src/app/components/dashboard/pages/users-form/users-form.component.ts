@@ -162,13 +162,13 @@ export class UsersFormComponent implements OnInit {
    * @param form 
    */
   onSubmit(form: any) {
-    form.firstname = form.firstname.toUpperCase().trim()
-    form.secondname = form.secondname.toUpperCase().trim()
-    form.firstlastname = form.firstlastname.toUpperCase().trim()
-    form.secondlastname = form.secondlastname.toUpperCase().trim()
+    form.firstname = form.firstname.toUpperCase().trim();
+    if(form.secondname !== null) form.secondname = form.secondname.toUpperCase().trim(); 
+    form.firstlastname = form.firstlastname.toUpperCase().trim();
+    if(form.secondlastname !== null) form.secondlastname = form.secondlastname.toUpperCase().trim();
     if (this.create) {
-      if (moment(form.createdAt).format() < moment().subtract(30, "d").format('YYYY-MM-DD') ||
-        moment(form.createdAt).format() > moment().format('YYYY-MM-DD')) {
+      if (moment(form.createdAt).format('YYYY-MM-DD') < moment().subtract(30, "d").format('YYYY-MM-DD') ||
+        moment(form.createdAt).format('YYYY-MM-DD') > moment().format('YYYY-MM-DD')) {
         this.error = true;
         this.msg = "La fecha de registro es mayor a hoy o tiene mas de 30 días";
       } else {
@@ -177,8 +177,12 @@ export class UsersFormComponent implements OnInit {
             this.exit = true;
             this.error = false;
             this.msg = "El usuario fue registrado correctamente";
-            localStorage.setItem('needUpdateUsers', 'true');
             this.UserForm.reset();
+            this.UserForm.controls['firstname'].setValue("");
+            this.UserForm.controls['firstlastname'].setValue("");
+            this.UserForm.controls['country'].setValue("");
+            localStorage.setItem('needUpdateUsers', 'true');
+            
             setTimeout(() => { this.exit = false; this.error = false; }, 1000);
           } else {
             this.error = true;
