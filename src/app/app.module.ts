@@ -22,7 +22,7 @@ const appRoutes: Routes = [];
     HttpClientModule
   ],
   providers: [
-    //{ provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: UnauthorizedInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ForbiddenInterceptor, multi: true }
   ],
